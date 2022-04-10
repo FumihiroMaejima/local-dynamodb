@@ -13,6 +13,8 @@ services:
 
 volumes:
   local-db-store:
-    name: ${VOLUME_NAME}
-    # driver: local
-    external: true
+    # name: ${VOLUME_NAME}
+    # external: true
+    # No external volume
+    name: ${VOLUME_NAME}-test
+    external: false

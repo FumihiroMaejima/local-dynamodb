@@ -24,7 +24,10 @@ if [[ "$(docker-compose -f ${DOCKER_COMPOSE_FILE} ps -q 2>/dev/null)" == "" ]]; 
 else
 　# コンテナが立ち上がっている状態の時
   showMessage 'Down Docker Container!'
-  docker-compose -f ${DOCKER_COMPOSE_FILE} down
+  # docker-compose -f ${DOCKER_COMPOSE_FILE} down
+
+  # TODO 現状volumeも削除する。(初期データ投入をしたい。)
+  docker-compose -f ${DOCKER_COMPOSE_FILE} down - v
 fi
 
 # 現在のDocker コンテナの状態を出力

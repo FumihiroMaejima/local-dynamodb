@@ -48,4 +48,38 @@ $ -jar DynamoDBLocal.jar -sharedDb -dbPath /home/dynamodb/db
 
 コンテナを立ち上げる時は`stop`をかけるのが望ましいとのこと。
 
+
+### Dockerfile の設定
+
+Dockerコンテナ関係の設定は下記の通り
+
+`DynamoDBLocal.jar`が置かれているディレクトリと`DBのデータが置かれている親ディレクトリ`が異なるので注意。
+
+```Dockerfile
+FROM amazon/dynamodb-local:1.18.0
+
+# DynamoDBLocal.jarが格納されているディレクトリ
+WORKDIR /home/dynamodblocal
+
+CMD ["-jar", "DynamoDBLocal.jar", "-sharedDb", "-dbPath", "/home/dynamodb/db"]
+```
+
+```yaml
+services:
+  dynamodb:
+    build: ./dynamodb_local
+    container_name: ${PROJECT_NAME}-dynamodb
+    volumes:
+      - local-db-store:/home/dynamodb/db # データの永続化
+    ports:
+      - "8000:8000"
+    environment:
+      TZ: "Asia/Tokyo"
+
+volumes:
+  local-db-store:
+    name: volume-name
+    external: false
+```
+
 ---

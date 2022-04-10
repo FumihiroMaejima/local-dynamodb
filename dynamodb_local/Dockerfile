@@ -1,10 +1,6 @@
 FROM amazon/dynamodb-local:1.18.0
 
-# WORKDIR /home/dynamodb
-WORKDIR /home/dynamodb
+# DynamoDBLocal.jarが格納されているディレクトリ
+WORKDIR /home/dynamodblocal
 
-
-# CMD ["mysqld"]
-# CMD ["nginx", "-g", "daemon off;","-c","/etc/nginx/nginx.conf"]
-# -jar DynamoDBLocal.jar -sharedDb -dbPath /home/dynamodb/db
 CMD ["-jar", "DynamoDBLocal.jar", "-sharedDb", "-dbPath", "/home/dynamodb/db"]
