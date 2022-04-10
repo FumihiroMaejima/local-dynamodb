@@ -1,0 +1,18 @@
+version: '3.7'
+
+services:
+  dynamodb:
+    build: ./dynamodb_local
+    container_name: ${PROJECT_NAME}-dynamodb
+    volumes:
+      - local-db-store:/home/dynamodb/db # データの永続化
+    ports:
+      - "${DYNAMO_DB_PORT}:8000"
+    environment:
+      TZ: "Asia/Tokyo"
+
+volumes:
+  local-db-store:
+    name: ${VOLUME_NAME}
+    # driver: local
+    external: true
