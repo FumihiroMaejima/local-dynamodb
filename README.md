@@ -61,16 +61,20 @@ FROM amazon/dynamodb-local:1.18.0
 # DynamoDBLocal.jarが格納されているディレクトリ
 WORKDIR /home/dynamodblocal
 
-CMD ["-jar", "DynamoDBLocal.jar", "-sharedDb", "-dbPath", "/home/dynamodb/db"]
+CMD ["-jar", "DynamoDBLocal.jar", "-sharedDb", "-dbPath", "/home/dynamodb/data"]
+
 ```
+
+ディレクトリの権限の都合で`user: root`を付けている。
 
 ```yaml
 services:
   dynamodb:
     build: ./dynamodb_local
     container_name: ${PROJECT_NAME}-dynamodb
+    user: root
     volumes:
-      - local-db-store:/home/dynamodb/db # データの永続化
+      - local-db-store:/home/dynamodb/data # データの永続化
     ports:
       - "8000:8000"
     environment:
@@ -81,5 +85,33 @@ volumes:
     name: volume-name
     external: false
 ```
+
+---
+
+# DynamoDBの管理画面の用意
+
+非公式だが下記のイメージを使ってコンテナを立ち上げる。
+
+`aaronshaf/dynamodb-admin`
+
+docker-compose.ymlの設定は下記の通り
+
+```yaml
+  admin:
+    container_name: ${PROJECT_NAME}-admin
+    image: aaronshaf/dynamodb-admin:latest
+    ports:
+      - "8001:8001"
+    depends_on:
+      - dynamodb
+    environment:
+      DYNAMO_ENDPOINT: http://dynamodb:8000
+      TZ: "Asia/Tokyo"
+```
+
+```
+
+```
+
 
 ---
