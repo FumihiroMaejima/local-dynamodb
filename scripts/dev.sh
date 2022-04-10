@@ -27,7 +27,7 @@ else
   # docker-compose -f ${DOCKER_COMPOSE_FILE} down
 
   # TODO 現状volumeも削除する。(初期データ投入をしたい。)
-  docker-compose -f ${DOCKER_COMPOSE_FILE} down - v
+  docker-compose -f ${DOCKER_COMPOSE_FILE} down -v
 fi
 
 # 現在のDocker コンテナの状態を出力
