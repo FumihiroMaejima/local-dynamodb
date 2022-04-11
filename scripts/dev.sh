@@ -5,6 +5,9 @@ SEPARATOPION='---------------------------'
 START_MESSAGE='check container status.'
 DOCKER_COMPOSE_FILE='./docker-compose.yml'
 
+# 初期化関連のshells
+LIST_TABLE_SHELL='./scripts/listTable.sh'
+
 # @param {string} message
 showMessage() {
   echo ${SEPARATOPION}
@@ -21,6 +24,8 @@ if [[ "$(docker-compose -f ${DOCKER_COMPOSE_FILE} ps -q 2>/dev/null)" == "" ]]; 
   # コンテナが立ち上がっていない状態の時
   showMessage 'Up Docker Container!'
   docker-compose -f ${DOCKER_COMPOSE_FILE} up -d
+
+  ${LIST_TABLE_SHELL}
 else
 　# コンテナが立ち上がっている状態の時
   showMessage 'Down Docker Container!'
