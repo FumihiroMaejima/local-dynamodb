@@ -109,7 +109,26 @@ docker-compose.ymlの設定は下記の通り
       TZ: "Asia/Tokyo"
 ```
 
+
+---
+
+# aws-cliでローカルのDynamoDBを操作する
+
+
+### テーブルの確認
+
+```shell
+% aws dynamodb list-tables --endpoint-url http://localhost:8000
+{
+    "TableNames": [
+        "test_table"
+    ]
+}
 ```
+
+
+
+```shell
 
 ```
 
