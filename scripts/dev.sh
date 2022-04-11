@@ -7,6 +7,7 @@ DOCKER_COMPOSE_FILE='./docker-compose.yml'
 
 # 初期化関連のshells
 LIST_TABLE_SHELL='./scripts/listTable.sh'
+CREATE_TABLE_SHELL='./scripts/createTable.sh'
 
 # @param {string} message
 showMessage() {
@@ -25,6 +26,7 @@ if [[ "$(docker-compose -f ${DOCKER_COMPOSE_FILE} ps -q 2>/dev/null)" == "" ]]; 
   showMessage 'Up Docker Container!'
   docker-compose -f ${DOCKER_COMPOSE_FILE} up -d
 
+  ${CREATE_TABLE_SHELL}
   ${LIST_TABLE_SHELL}
 else
 　# コンテナが立ち上がっている状態の時
