@@ -5,6 +5,7 @@ SEPARATOPION='---------------------------'
 
 AWS_SERVICE_NAME=dynamodb
 AWS_SERVICE_COMMAND=create-table
+AWS_SERVICE_PUT_COMMAND=put-item
 ENDPOINT_URL='http://localhost:8000'
 
 # @param {string} message
@@ -39,4 +40,16 @@ aws "${AWS_SERVICE_NAME}" "${AWS_SERVICE_COMMAND}" \
 --attribute-definitions AttributeName=Id,AttributeType=N \
 --key-schema AttributeName=Id,KeyType=HASH \
 --provisioned-throughput ReadCapacityUnits=1,WriteCapacityUnits=1 \
+--endpoint-url "${ENDPOINT_URL}"
+
+aws "${AWS_SERVICE_NAME}" "${AWS_SERVICE_COMMAND}" \
+--table-name TestTable2 \
+--attribute-definitions AttributeName=key,AttributeType=S \
+--key-schema AttributeName=key,KeyType=HASH \
+--provisioned-throughput ReadCapacityUnits=5,WriteCapacityUnits=5 \
+--endpoint-url "${ENDPOINT_URL}"
+
+aws "${AWS_SERVICE_NAME}" "${AWS_SERVICE_PUT_COMMAND}" \
+--table-name TestTable2 \
+--item '{ "population": { "N": "38234" }, "date_mod": { "S": "1970-01-01" }, "key": { "S": "tx1234" }, "name": { "S": "高崎" } }' \
 --endpoint-url "${ENDPOINT_URL}"
