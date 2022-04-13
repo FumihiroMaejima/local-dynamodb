@@ -25,6 +25,12 @@ dev:
 	sh ./scripts/dev.sh
 
 ##############################
+# dynamodb
+##############################
+dynamodb-help:
+	docker-compose exec dynamodb java -jar DynamoDBLocal.jar -help
+
+##############################
 # db container(mysql)
 ##############################
 mysql:
