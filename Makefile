@@ -30,6 +30,9 @@ dev:
 dynamodb-help:
 	docker-compose exec dynamodb java -jar DynamoDBLocal.jar -help
 
+command:
+	sh ./scripts/commandTable.sh
+
 ##############################
 # db container(mysql)
 ##############################

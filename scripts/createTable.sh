@@ -53,3 +53,8 @@ aws "${AWS_SERVICE_NAME}" "${AWS_SERVICE_PUT_COMMAND}" \
 --table-name TestTable2 \
 --item '{ "population": { "N": "38234" }, "date_mod": { "S": "1970-01-01" }, "key": { "S": "tx1234" }, "name": { "S": "高崎" } }' \
 --endpoint-url "${ENDPOINT_URL}"
+
+aws "${AWS_SERVICE_NAME}" "${AWS_SERVICE_PUT_COMMAND}" \
+--table-name TestTable2 \
+--item '{ "population": { "N": "12345" }, "date_mod": { "S": "1970-01-02" }, "key": { "S": "aa1234" }, "name": { "S": "伊勢崎" } }' \
+--endpoint-url "${ENDPOINT_URL}"
