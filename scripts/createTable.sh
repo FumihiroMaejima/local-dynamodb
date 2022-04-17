@@ -5,6 +5,7 @@ SEPARATOPION='---------------------------'
 
 AWS_SERVICE_NAME=dynamodb
 AWS_SERVICE_COMMAND=create-table
+AWS_SERVICE_DESCRIBE=describe-table
 AWS_SERVICE_PUT_COMMAND=put-item
 ENDPOINT_URL='http://localhost:8000'
 
@@ -35,20 +36,32 @@ showMessage 'Create Initial Table.'
 # --provisioned-throughput ReadCapacityUnits=1,WriteCapacityUnits=1
 # --endpoint-url "${ENDPOINT_URL}"
 
-insertData() {
+createDatabase() {
+
+TABLE_NAME1=TestTable
+TABLE_NAME2=TestTable2
+
 aws "${AWS_SERVICE_NAME}" "${AWS_SERVICE_COMMAND}" \
---table-name TestTable \
+--table-name "${TABLE_NAME1}" \
 --attribute-definitions AttributeName=Id,AttributeType=N \
 --key-schema AttributeName=Id,KeyType=HASH \
 --provisioned-throughput ReadCapacityUnits=1,WriteCapacityUnits=1 \
 --endpoint-url "${ENDPOINT_URL}"
 
+# aws "${AWS_SERVICE_NAME}" "${AWS_SERVICE_DESCRIBE}" --table-name TestTable --endpoint-url "${ENDPOINT_URL}" | grep TableStatus
+
 aws "${AWS_SERVICE_NAME}" "${AWS_SERVICE_COMMAND}" \
---table-name TestTable2 \
+--table-name "${TABLE_NAME2}" \
 --attribute-definitions AttributeName=key,AttributeType=S \
 --key-schema AttributeName=key,KeyType=HASH \
 --provisioned-throughput ReadCapacityUnits=5,WriteCapacityUnits=5 \
 --endpoint-url "${ENDPOINT_URL}"
+
+# aws "${AWS_SERVICE_NAME}" "${AWS_SERVICE_DESCRIBE}" --table-name TestTable2 --endpoint-url "${ENDPOINT_URL}" | grep TableStatus
+
+}
+
+insertData() {
 
 aws "${AWS_SERVICE_NAME}" "${AWS_SERVICE_PUT_COMMAND}" \
 --table-name TestTable2 \
@@ -66,6 +79,9 @@ aws "${AWS_SERVICE_NAME}" "${AWS_SERVICE_PUT_COMMAND}" \
 --endpoint-url "${ENDPOINT_URL}"
 
 }
+
+createDatabase
+wait
 
 insertData
 wait
