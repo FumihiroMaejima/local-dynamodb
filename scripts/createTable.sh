@@ -35,6 +35,7 @@ showMessage 'Create Initial Table.'
 # --provisioned-throughput ReadCapacityUnits=1,WriteCapacityUnits=1
 # --endpoint-url "${ENDPOINT_URL}"
 
+insertData() {
 aws "${AWS_SERVICE_NAME}" "${AWS_SERVICE_COMMAND}" \
 --table-name TestTable \
 --attribute-definitions AttributeName=Id,AttributeType=N \
@@ -58,3 +59,14 @@ aws "${AWS_SERVICE_NAME}" "${AWS_SERVICE_PUT_COMMAND}" \
 --table-name TestTable2 \
 --item '{ "population": { "N": "12345" }, "date_mod": { "S": "1970-01-02" }, "key": { "S": "aa1234" }, "name": { "S": "伊勢崎" } }' \
 --endpoint-url "${ENDPOINT_URL}"
+
+aws "${AWS_SERVICE_NAME}" "${AWS_SERVICE_PUT_COMMAND}" \
+--table-name TestTable2 \
+--item '{ "population": { "N": "67890" }, "date_mod": { "S": "2020-02-02" }, "key": { "S": "ss1357" }, "name": { "S": "前橋" } }' \
+--endpoint-url "${ENDPOINT_URL}"
+
+}
+
+insertData
+wait
+
