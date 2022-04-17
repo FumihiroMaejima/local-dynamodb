@@ -26,8 +26,8 @@ if [[ "$(docker-compose -f ${DOCKER_COMPOSE_FILE} ps -q 2>/dev/null)" == "" ]]; 
   showMessage 'Up Docker Container!'
   docker-compose -f ${DOCKER_COMPOSE_FILE} up -d
 
-  ${CREATE_TABLE_SHELL}
-  ${LIST_TABLE_SHELL}
+  sh "${CREATE_TABLE_SHELL}"
+  sh "${LIST_TABLE_SHELL}"
 else
 　# コンテナが立ち上がっている状態の時
   showMessage 'Down Docker Container!'
