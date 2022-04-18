@@ -4,11 +4,23 @@ services:
   dynamodb:
     build: ./dynamodb_local
     container_name: ${PROJECT_NAME}-dynamodb
+    user: root
     volumes:
-      - local-db-store:/home/dynamodb/db # データの永続化
+      - local-db-store:/home/dynamodb/data # データの永続化
     ports:
       - "${DYNAMO_DB_PORT}:8000"
     environment:
+      TZ: "Asia/Tokyo"
+
+  admin:
+    container_name: ${PROJECT_NAME}-admin
+    image: aaronshaf/dynamodb-admin:latest
+    ports:
+      - "${DYNAMO_DB_ADMIN_PORT}:8001"
+    depends_on:
+      - dynamodb
+    environment:
+      DYNAMO_ENDPOINT: http://dynamodb:8000
       TZ: "Asia/Tokyo"
 
 volumes:
