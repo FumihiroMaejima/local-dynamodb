@@ -7,6 +7,7 @@ AWS_SERVICE_NAME=dynamodb
 AWS_SERVICE_SCAN_COMMAND=scan
 AWS_SERVICE_GET_ITEM_COMMAND=get-item
 AWS_SERVICE_LIST_TABLES=list-tables
+AWS_SERVICE_SCAN_TABLES=scan
 ENDPOINT_URL='http://localhost:8000'
 TABLE_NAME='TestTable2'
 
@@ -31,3 +32,7 @@ showMessage 'Execute Command.'
 aws "${AWS_SERVICE_NAME}" "${AWS_SERVICE_LIST_TABLES}" \
 --endpoint-url "${ENDPOINT_URL}"
 
+TABLE_NAME2=TestTable2
+
+aws "${AWS_SERVICE_NAME}" "${AWS_SERVICE_SCAN_TABLES}" "${TABLE_NAME2}" \
+--endpoint-url "${ENDPOINT_URL}"
